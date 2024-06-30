@@ -1,0 +1,23 @@
+host="localhost"
+port="8080"
+
+# Check PHP version
+PHP_VERSION=$(php -v | grep -oP '(?<=PHP )\d+\.\d+\.\d+' | head -n 1)
+
+if [ "$PHP_VERSION" = "7.3.9" ]; then
+    php=php
+else
+    php=$PHP_BIN/php
+fi
+
+# Check if host and port are provided as arguments
+if [ $# -ge 1 ]; then
+    host="$1"
+fi
+
+if [ $# -ge 2 ]; then
+    port="$2"
+fi
+
+# Launch PHP server
+$php -S "$host:$port" -t public/
